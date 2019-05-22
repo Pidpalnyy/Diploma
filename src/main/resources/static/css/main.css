@@ -1,0 +1,349 @@
+@keyframes arrow{
+    from{
+        transform: translateY(0);
+    }
+    to{
+        transform: translateY(-10px);;
+    }
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+body {
+    margin: 0 auto;
+    background: url("page/IMG_3.jpg") no-repeat center center fixed;
+    background-size: cover;
+    overflow: auto;
+}
+*{
+    margin: 0;
+    padding: 0;
+    text-shadow: 2px 2px 5px black;
+}
+a{
+    text-decoration: none;
+}
+.block{
+    width: 100%;
+    height: 100%;
+}
+.container{
+    width: 100%;
+    height: 100%;
+
+}
+.header{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 100px;
+}
+.logo{
+    width: 200px;
+    height: 200px;
+    background-image: url("page/1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}
+.title{
+    width: 100%;
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+    font-style: italic;
+    font-family: Georgia;
+    word-spacing: 20px;
+    text-shadow: 5px 2px 5px rgba(0,0,0,0.7);
+    margin-top: 20px;
+}
+.tagline{
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    font-style: italic;
+    font-family: Georgia;
+    word-spacing: 20px;
+    text-shadow: 5px 2px 5px rgba(0,0,0,0.7);
+}
+.arrowBlock{
+    margin-top: 80px;
+    animation-name: arrow;
+    animation-duration: 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+.arrow{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-right: 7px solid white;
+    border-bottom: 7px solid white;
+    transform: rotate(45deg);
+}
+.top-menu-wrapper{
+    height: 120px;
+}
+.top-menu {
+    height: 120px;
+    z-index: 9999999;
+    width: 100%;
+    background: #2c96b0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.menu{
+    width: 100px;
+    height: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    cursor: pointer;
+}
+.galleryMenu{
+    width: 100px;
+    height: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.midlle{
+    margin: 0 auto;
+    width: 100%;
+    height: 600px;
+    background: #2c96b0;
+    display: flex;
+    flex-flow: row wrap;
+}
+.midlle div{
+    color: white;
+}
+.viewMenu{
+    width: 23%;
+    height: 100%;
+}
+.viewMenu div{
+    display: flex;
+    flex-flow: row wrap;
+}
+h2{
+    margin: 20px;
+}
+.categoryMenu{
+    width: 100%;
+    height: 30px;
+    font-size: 22px;
+    margin-left: 40px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.viewBlock{
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+
+.sliderViewBlock{
+    width: 800px;/*any width*/
+    height: 550px;/*any height*/
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #2c96b0;
+}
+.sliderViewBlock .sliderViewBlock-wrapper{
+    width: 200%;
+    height: 100%;
+    font-size: 0;
+}
+.sliderViewBlock .sliderViewBlock-wrapper .productBlock{
+    width: 25%;
+    height: 100%;
+    display: inline-flex;
+    flex-flow: row wrap;
+}
+.sliderViewBlock .sliderViewBlock-arrow{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top:50%;
+    margin-top: -25px;
+    cursor: pointer;
+}
+.sliderViewBlock .sliderViewBlock-arrow-left{
+    left: 20px;
+    border-top: 7px solid black;
+    border-left: 7px solid black;
+    content: "";
+    transform: rotate(-45deg);
+}
+.sliderViewBlock .sliderViewBlock-arrow-right{
+    right: 20px;
+    border-top: 7px solid black;
+    border-right: 7px solid black;
+    content: "";
+    transform: rotate(45deg);
+}
+
+
+/*.productBlock{*/
+    /*width: 300px;*/
+    /*height: 100%;*/
+    /*background: grey;*/
+/*}*/
+.productImg{
+    width: 80%;
+    height: 150px;
+}
+.productName{
+    width: 100%;
+    height: 30px;
+ }
+.productText{
+    width: 100%;
+    height: 30px;
+}
+.productQuantity{
+    width: 100%;
+    height: 30px;
+}
+.productPrice{
+    width: 100%;
+    height: 30px;
+}
+
+
+.top-menu.sticky-menu {
+    position: fixed;
+    top: 0;
+}
+.logo_1{
+    width: 100px;
+    height: 100px;
+    background-image: url("page/Lo3.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+.gallery{
+    width: 100%;
+    height: 600px;
+    background: #2c96b0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+.gallery .imageDiv{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.slider{
+    width: 900px;/*any width*/
+    height: 550px;/*any height*/
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #2c96b0;
+}
+.slider .slider-wrapper{
+    width: 200%;
+    height: 100%;
+    font-size: 0;
+}
+.slider .slider-wrapper div{
+    width: 50%;
+    height: 100%;
+    display: inline-flex;
+    flex-flow: row wrap;
+}
+.slider .slider-arrow{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top:50%;
+    margin-top: -25px;
+    cursor: pointer;
+}
+.slider .slider-arrow-left{
+    left: 20px;
+    border-top: 7px solid black;
+    border-left: 7px solid black;
+    content: "";
+    transform: rotate(-45deg);
+}
+.slider .slider-arrow-right{
+    right: 20px;
+    border-top: 7px solid black;
+    border-right: 7px solid black;
+    content: "";
+    transform: rotate(45deg);
+}
+.del{
+    width: 30px;
+    height: 30px;
+    background: red;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.map{
+    width: 100%;
+    height: 600px;
+    background: #2c96b0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.map figure{
+    width: 100%;
+    height: 100%;
+}
+.bottom{
+    width: 100%;
+    height: 200px;
+    background: #2c96b0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding-top: 20px;
+}
+.bottom>div{
+    font-size: 22px;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+}
+.fb{
+    width: 50px;
+    height: 50px;
+    background-image: url("page/fb.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.inst{
+    width: 50px;
+    height: 50px;
+    background-image: url("page/inst.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 20px;
+}
