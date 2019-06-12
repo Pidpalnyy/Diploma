@@ -19,7 +19,7 @@
         <div class="add">
 
         <h2>Add Product</h2>
-        <form action="/product/addProduct" method="post" enctype="multipart/form-data">
+        <form action="/api/product/addProduct" method="post" enctype="multipart/form-data">
 
         <label for="category">Категория:</label>
         <select name="category" id="category">
@@ -43,11 +43,11 @@
         <label for="price">Цена:</label>
         <input type="text" id="price" name="price"/>
 
-        <input type="hidden"
-        name="${_csrf.parameterName}"
-        value="${_csrf.token}"/>
+        <#--<input type="hidden"-->
+        <#--name="${_csrf.parameterName}"-->
+        <#--value="${_csrf.token}"/>-->
 
-        <input type="submit" class="submit" value="Загрузить">
+        <input type="submit" class="submit" value="Добавить">
 
         </form>
 

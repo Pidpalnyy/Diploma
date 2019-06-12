@@ -29,11 +29,11 @@
                         <option value="childrensMenu">Детское меню</option>
                 </select>
 
-                <input type="hidden"
-                       name="${_csrf.parameterName}"
-                       value="${_csrf.token}"/>
+                <#--<input type="hidden"-->
+                       <#--name="${_csrf.parameterName}"-->
+                       <#--value="${_csrf.token}"/>-->
 
-                <input type="submit" class="submit" value="Загрузить">
+                <input type="submit" class="submit" value="Добавить">
             </form>
         </div>
     </div>

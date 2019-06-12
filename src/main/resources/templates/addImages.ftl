@@ -19,14 +19,14 @@
     <div class="block">
         <div class="add">
             <h2>Галерея</h2>
-            <form action="/image/addImages" method="post" enctype="multipart/form-data">
+            <form action="/api/image/addImages" method="post" enctype="multipart/form-data">
 
                 <label for="image">Фото:</label>
                 <input type="file" id="image" name="image">
 
-                <input type="hidden"
-                       name="${_csrf.parameterName}"
-                       value="${_csrf.token}"/>
+                <#--<input type="hidden"-->
+                       <#--name="${_csrf.parameterName}"-->
+                       <#--value="${_csrf.token}"/>-->
 
                 <input type="submit" class="submit" value="Загрузить">
             </form>

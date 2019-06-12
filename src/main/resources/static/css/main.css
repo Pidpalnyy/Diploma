@@ -6,17 +6,17 @@
         transform: translateY(-10px);;
     }
 }
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
+/*html, body {*/
+    /*height: 100%;*/
+    /*!*margin: 0;*!*/
+    /*!*padding: 0;*!*/
+    /*!*overflow: hidden;*!*/
+/*}*/
 body {
     margin: 0 auto;
     background: url("page/IMG_3.jpg") no-repeat center center fixed;
     background-size: cover;
-    overflow: auto;
+    /*overflow: auto;*/
 }
 *{
     margin: 0;
@@ -26,13 +26,13 @@ body {
 a{
     text-decoration: none;
 }
-.block{
-    width: 100%;
-    height: 100%;
-}
+/*.block{*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+/*}*/
 .container{
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 
 }
 .header{
@@ -92,9 +92,14 @@ a{
 .top-menu-wrapper{
     height: 120px;
 }
+.top-menu-wrapper-fixed{
+    position: fixed;
+    z-index: 9999999;
+    top: 0;
+    width: 100%;
+}
 .top-menu {
     height: 120px;
-    z-index: 9999999;
     width: 100%;
     background: #2c96b0;
     display: flex;
@@ -149,6 +154,8 @@ h2{
     cursor: pointer;
 }
 
+/*--------------------------------------------------------------------------------------------------------*/
+
 .viewBlock{
     width: 75%;
     height: 100%;
@@ -156,15 +163,60 @@ h2{
     flex-flow: row wrap;
     justify-content: space-between;
 }
-
-
 .sliderViewBlock{
-    width: 800px;/*any width*/
-    height: 550px;/*any height*/
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
-    position: relative;
     overflow: hidden;
     background: #2c96b0;
+}
+.sliderViewBlock-arrowBlock{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+.nameCategoryForViewBlock{
+    width: 80px;
+    height: 50px;
+    font-size: 26px;
+    line-height: 50px;
+    display: inline-block;
+}
+.sliderViewBlockForArrowBlock{
+    width: 100px;
+    height: 50px;
+    display: inline-block;
+}
+.sliderViewBlock .sliderViewBlock-arrow{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+}
+.sliderViewBlock .sliderViewBlock-arrow-left{
+    border-top: 7px solid white;
+    border-left: 7px solid white;
+    content: "";
+    transform: rotate(-45deg);
+}
+.sliderViewBlock .sliderViewBlock-arrow-left:hover{
+    border-top: 7px solid black;
+    border-left: 7px solid black;
+}
+.sliderViewBlock .sliderViewBlock-arrow-right{
+    border-top: 7px solid white;
+    border-right: 7px solid white;
+    content: "";
+    transform: rotate(45deg);
+}
+.sliderViewBlock .sliderViewBlock-arrow-right:hover{
+    border-top: 7px solid black;
+    border-right: 7px solid black;
+    content: "";
+    transform: rotate(45deg);
 }
 .sliderViewBlock .sliderViewBlock-wrapper{
     width: 200%;
@@ -176,62 +228,40 @@ h2{
     height: 100%;
     display: inline-flex;
     flex-flow: row wrap;
+    justify-items: flex-start;
 }
-.sliderViewBlock .sliderViewBlock-arrow{
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    top:50%;
-    margin-top: -25px;
-    cursor: pointer;
-}
-.sliderViewBlock .sliderViewBlock-arrow-left{
-    left: 20px;
-    border-top: 7px solid black;
-    border-left: 7px solid black;
-    content: "";
-    transform: rotate(-45deg);
-}
-.sliderViewBlock .sliderViewBlock-arrow-right{
-    right: 20px;
-    border-top: 7px solid black;
-    border-right: 7px solid black;
-    content: "";
-    transform: rotate(45deg);
-}
-
-
-/*.productBlock{*/
-    /*width: 300px;*/
-    /*height: 100%;*/
-    /*background: grey;*/
-/*}*/
 .productImg{
     width: 80%;
     height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .productName{
     width: 100%;
-    height: 30px;
+    height: 20px;
+    font-size: 22px;
  }
 .productText{
     width: 100%;
-    height: 30px;
+    font-size: 16px;
 }
 .productQuantity{
     width: 100%;
-    height: 30px;
+    height: 20px;
+    font-size: 22px;
 }
 .productPrice{
     width: 100%;
-    height: 30px;
+    height: 20px;
+    font-size: 22px;
 }
 
 
-.top-menu.sticky-menu {
-    position: fixed;
-    top: 0;
-}
+/*.top-menu.sticky-menu {*/
+    /*position: fixed;*/
+    /*top: 0;*/
+/*}*/
 .logo_1{
     width: 100px;
     height: 100px;
@@ -260,7 +290,6 @@ h2{
     width: 900px;/*any width*/
     height: 550px;/*any height*/
     margin: 0 auto;
-    position: relative;
     overflow: hidden;
     background: #2c96b0;
 }
@@ -275,27 +304,36 @@ h2{
     display: inline-flex;
     flex-flow: row wrap;
 }
+.slider .nameForGallery{
+    font-size: 32px;
+    color: white;
+}
 .slider .slider-arrow{
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    top:50%;
-    margin-top: -25px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
 }
 .slider .slider-arrow-left{
-    left: 20px;
-    border-top: 7px solid black;
-    border-left: 7px solid black;
+    border-top: 7px solid white;
+    border-left: 7px solid white;
     content: "";
     transform: rotate(-45deg);
 }
-.slider .slider-arrow-right{
-    right: 20px;
+.slider .slider-arrow-left:hover{
     border-top: 7px solid black;
-    border-right: 7px solid black;
+    border-left: 7px solid black;
+}
+.slider .slider-arrow-right{
+    border-top: 7px solid white;
+    border-right: 7px solid white;
     content: "";
     transform: rotate(45deg);
+}
+.slider .slider-arrow-right:hover{
+    border-top: 7px solid black;
+    border-right: 7px solid black;
 }
 .del{
     width: 30px;
@@ -304,6 +342,8 @@ h2{
     font-weight: bold;
     border-radius: 50%;
     cursor: pointer;
+
+    display: none;
 }
 
 .map{
