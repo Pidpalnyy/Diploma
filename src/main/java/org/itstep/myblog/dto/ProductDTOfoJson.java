@@ -13,7 +13,9 @@ public class ProductDTOfoJson {
     private String name;
     private String text;
     private Double quantity;
+    private String selectQuantity;
     private Double price;
+    private String selectPrice;
     private String categoryName;
 
     public ProductDTOfoJson(ProductDTO productDto) {
@@ -22,7 +24,9 @@ public class ProductDTOfoJson {
         this.name = productDto.getName ();
         this.text = productDto.getText ();
         this.quantity = productDto.getQuantity ();
+        this.selectQuantity = productDto.getSelectQuantity ();
         this.price = productDto.getPrice ();
+        this.selectPrice = productDto.getSelectPrice ();
         this.categoryName = productDto.getCategoryName ();
     }
 }

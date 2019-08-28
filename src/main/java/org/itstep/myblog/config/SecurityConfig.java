@@ -16,31 +16,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests ()
-                    .antMatchers ("/**").permitAll ()
-//        .and().csrf().ignoringAntMatchers ("/api/**")
+                    .antMatchers ("/").permitAll ()
+                    .antMatchers("/css/**").permitAll()
+                    .antMatchers("/script.js").permitAll()
+                    .antMatchers("/images/*").permitAll()
+                    .antMatchers("/api/**").permitAll()
+                    .anyRequest().authenticated()
         .and().csrf().disable ()
-//                    .antMatchers ("/images/*").permitAll ()
-//                    .antMatchers ("/register").permitAll ()
-//                    .antMatchers("/css/**").permitAll()
-//                    .anyRequest().authenticated()
-//                .and ()
-//                    .formLogin ()
-//                        .loginPage ("/login").permitAll ()
-//                .and ()
-//                    .logout ()
-//                        .logoutSuccessUrl ("/")
-//                        .invalidateHttpSession (true)
+                    .formLogin ()
+                        .loginPage ("/login").permitAll ()
+                .and ()
+                    .logout ()
+                        .logoutSuccessUrl ("/")
+                        .invalidateHttpSession (true)
         ;
     }
-
     @Bean
     public UserDetailsService userDetailsService(UsersRepository repository) {
         return new BlogUserDetailsService (repository);
     }
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder ();
     }
-
 }

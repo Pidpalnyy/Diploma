@@ -11,34 +11,27 @@
 <body>
 <div class="container">
     <div class="mainMenu">
-        <div><a href="/addCategory">Категории меню</a></div>
-        <div><a href="/addProduct">Меню</a></div>
-        <div><a href="/addImages">Галерея</a></div>
+        <div><a href="/">Главная</a></div>
+        <div><a href="/addProduct">Добавить продукт</a></div>
+        <div><a href="/addImages">Добавить фото в Галлерею</a></div>
     </div>
     <div class="block">
         <div class="add">
-            <h2>Добавить меню</h2>
-            <form action="/category/addCategory" method="post">
+            <h2>Добавить категории меню</h2>
+            <form action="/api/category/addCategory" method="post">
 
                 <label for="category">Категория:</label>
                 <input type="text" id="category" name="name"/>
 
                 <label for="menu">Меню:</label>
                 <select name="menu" id="menu">
-                        <option value="menu">Меню</option>
-                        <option value="childrensMenu">Детское меню</option>
+                    <option value="menu">Меню</option>
+                    <option value="childrensMenu">Детское меню</option>
                 </select>
-
-                <#--<input type="hidden"-->
-                       <#--name="${_csrf.parameterName}"-->
-                       <#--value="${_csrf.token}"/>-->
-
                 <input type="submit" class="submit" value="Добавить">
             </form>
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

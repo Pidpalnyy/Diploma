@@ -3,7 +3,7 @@ package org.itstep.myblog.controllers;
 import lombok.RequiredArgsConstructor;
 import org.itstep.myblog.entities.Image;
 import org.itstep.myblog.repository.ImageRepository;
-import org.itstep.myblog.services.ImageFileCreate;
+import org.itstep.myblog.services.ImageFileService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ import java.nio.file.Files;
 public class ImageController {
     private final ImageRepository imageRepository;
     private final String BASE_IMG_PATH = "images";
-    private final ImageFileCreate imageFileCreate;
+    private final ImageFileService imageFileCreate;
 
     @PostMapping("/api/image/addImages")
     public String addImages(
@@ -39,31 +39,24 @@ public class ImageController {
         }
         return "redirect:/addImages";
     }
-
     @PostMapping("/api/image/delImage")
     public String delImage(Long id,HttpSession session){
         Image image = imageRepository.getById (id);
         String path = image.getImage ();
-        delImageFile(path);
+        imageFileCreate.delImageFile(path);
         imageRepository.deleteById (id);
         return "redirect:/";
     }
-
-    private void delImageFile(String path) {
-        final File file = new File (BASE_IMG_PATH+"/"+path);
-        if(file.delete ()){
-            System.out.println(BASE_IMG_PATH + "/"+ path + " - файл удален");
-        }else System.out.println(BASE_IMG_PATH + "/"+ path + " - фаил удалить не получилось");
-    }
-
     @GetMapping("images/{image}")
     public ResponseEntity<byte[]> getImage(@PathVariable String image) throws Exception {
          File f = new File (BASE_IMG_PATH+"/"+ image);
         FileInputStream fis = new FileInputStream (f);
         HttpHeaders headers =  new HttpHeaders ();
         headers.set ("Content-Type", Files.probeContentType (f.toPath ()));
+        byte[] imageBytes = fis.readAllBytes();
+        fis.close ();
         return new ResponseEntity<> (
-                fis.readAllBytes(),
+                imageBytes,
                 headers,
                 HttpStatus.OK
         );

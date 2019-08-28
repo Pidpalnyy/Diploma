@@ -109,7 +109,8 @@ class Animate{
 class ViewModule extends Module{
     constructor(selector) {
         super(selector);
-        this.headerMenu="Кофе";
+        this.headerMenu="";
+        this.flag=false;
         this.paused = false;
         this.isAnimViewBlock = false;
     }
@@ -120,6 +121,9 @@ class ViewModule extends Module{
         this.nameCategoryForViewBlock=this.get(".nameCategoryForViewBlock");
         this.categoryMenu=this.get(".categoryMenu");
         this.viewMenu=this.get(".viewMenu");
+        this.nameCategoryMenu=this.get(".nameCategoryMenu");
+        this.mainMenuCategory=this.get(".mainMenuCategory");
+        this.childrenMenuCategory=this.get(".childrenMenuCategory");
     }
     bindEvents() {
         this.rightArrowViewBlock.addEventListener("click",()=>this.animateLeftViewBlock());
@@ -128,7 +132,30 @@ class ViewModule extends Module{
             if (e.target.matches('.categoryMenu')) {
                 let categoryName = e.target;
                 this.headerMenu=categoryName.dataset.name;
+                if (this.childrenMenuCategory.classList.contains("viewBlockForNameCategoryMenu")) {
+                    this.childrenMenuCategory.classList.toggle("viewBlockForNameCategoryMenu");
+                }
+                if (this.mainMenuCategory.classList.contains("viewBlockForNameCategoryMenu")) {
+                    this.mainMenuCategory.classList.toggle("viewBlockForNameCategoryMenu");
+                }
                 this.updateProductPostList(this.headerMenu);
+            }
+        });
+        this.viewMenu.addEventListener("click", e => {
+                    if(e.target.matches('.nameCategoryMenu')){
+                        if(document.body.clientWidth<600){
+                            let nameCategoryMenu = e.target.dataset.name;
+                            this.viewCategoryMenu(nameCategoryMenu);
+                        }
+                    }
+                    if(e.target.matches('.delCat')){
+                        let categoryId = e.target.dataset.id;
+                        this.deleteCategory(categoryId);
+                    }
+        });
+        this.slideWrapperViewBlock.addEventListener("click", e => {
+            if (e.target.matches('.del')) {
+                this.delProduct(e.target.dataset.id);
             }
         });
     }
@@ -138,12 +165,56 @@ class ViewModule extends Module{
             this.animateLeft();
         },this.autoscrolltime);
         this.products = [];
-        this.updateProductPostList(this.headerMenu);
+        this.categoryList = [];
+        this.findCategoryMenu();
+    }
+    viewCategoryMenu(nameCategoryMenu){
+        if(nameCategoryMenu.toString()==="mainMenu"){
+            if (this.childrenMenuCategory.classList.contains("viewBlockForNameCategoryMenu")) {
+                this.childrenMenuCategory.classList.toggle("viewBlockForNameCategoryMenu");
+            }
+            this.mainMenuCategory.classList.toggle("viewBlockForNameCategoryMenu");
+        }
+        else {
+            if (this.mainMenuCategory.classList.contains("viewBlockForNameCategoryMenu")) {
+                this.mainMenuCategory.classList.toggle("viewBlockForNameCategoryMenu");
+            }
+            this.childrenMenuCategory.classList.toggle("viewBlockForNameCategoryMenu");
+        }
+    }
+    findCategoryMenu(){
+        Ajax.get("/api/category/getAllCategory",
+            resp => this.onLoadCategoryList(JSON.parse(resp).data));
+    }
+    onLoadCategoryList(categoryList){
+        this.categoryList = categoryList;
+        if (this.categoryList.length<=0) alert("В меню ПУСТО!!!");
+        else {
+            let randomItem = this.categoryList[Math.floor(Math.random()*this.categoryList.length)];
+            this.headerMenu=randomItem.name;
+            this.updateProductPostList(this.headerMenu);
+        }
+    }
+    delProduct(id) {
+        if (confirm("Вы действительно хотите удалить продукт?")) {
+            Ajax.post("/api/product/deleteProduct",{id:id},r=> {
+                this.updateProductPostList(this.headerMenu);
+            })
+        }
+    }
+    deleteCategory(id) {
+        if (confirm("Вы действительно хотите удалить категорию?")) {
+            if (confirm("Вы удалите также весь продукт этой категории. Хорошо подумали?")){
+                Ajax.post("/api/category/delCategory",{id:id},r=> {
+                    this.findCategoryMenu();
+                    document.location.href = "/";
+                })
+            }
+        }
     }
     updateProductPostList(categoryName) {
         Ajax.post("/api/product/productPost", {categoryName: categoryName},
-            resp => this.onLoadProducts(JSON.parse(resp).data)
-        )
+            resp => this.onLoadProducts(JSON.parse(resp).data));
     }
     onLoadProducts(products) {
         this.products = products;
@@ -157,38 +228,51 @@ class ViewModule extends Module{
             productBlock.className = "productBlock";
             productBlock.dataset.id = product.id;
 
+            let productBox = document.createElement("div");
+            productBox.className = "productBox";
+
             let productImg = document.createElement("img");
             productImg.className = "productImg";
             productImg.setAttribute('src', '/images/'+product.page);
-            // productImg.style.backgroundImage = "url('/images/'+product.page)";
-            productBlock.appendChild(productImg);
+            productBox.appendChild(productImg);
 
             let productName = document.createElement("div");
             productName.className = "productName";
             productName.innerHTML = product.name;
-            productBlock.appendChild(productName);
+            productBox.appendChild(productName);
 
             let productText = document.createElement("div");
             productText.className = "productText";
             productText.innerHTML = product.text;
-            productBlock.appendChild(productText);
+            productBox.appendChild(productText);
 
             let productQuantity = document.createElement("div");
             productQuantity.className = "productQuantity";
             productQuantity.innerHTML = product.quantity;
-            productBlock.appendChild(productQuantity);
+            let productSelectQuantity = document.createElement("div");
+            productSelectQuantity.className = "productSelectQuantity";
+            productSelectQuantity.innerHTML = product.selectQuantity;
+            productQuantity.appendChild(productSelectQuantity);
+            productBox.appendChild(productQuantity);
 
             let productPrice = document.createElement("div");
             productPrice.className = "productPrice";
             productPrice.innerHTML = product.price;
-            productBlock.appendChild(productPrice);
+            let productSelectPrice = document.createElement("div");
+            productSelectPrice.className = "productSelectPrice";
+            productSelectPrice.innerHTML = product.selectPrice;
+            productPrice.appendChild(productSelectPrice);
+            productBox.appendChild(productPrice);
 
-            let delbtn = document.createElement("button");
-            delbtn.className = "del";
-            delbtn.dataset.id = product.id;
-            delbtn.innerHTML = "X";
-            productBlock.appendChild(delbtn);
+            if (this.flag){
+                let delbtn = document.createElement("button");
+                delbtn.className = "del";
+                delbtn.dataset.id = product.id;
+                delbtn.innerHTML = "X";
+                productBox.appendChild(delbtn);
+            }
 
+            productBlock.appendChild(productBox);
             this.slideWrapperViewBlock.appendChild(productBlock);
         });
     }
@@ -198,8 +282,19 @@ class ViewModule extends Module{
         Animate.animate(0,-100,1000,(value)=> {
             this.slideWrapperViewBlock.style.marginLeft = value+"%";
         },()=>{
-            this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
-            this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+            if(document.body.clientWidth<450){
+                this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+            }
+            else if(document.body.clientWidth<1000){
+                this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+                this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+            }
+            else {
+                this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+                this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+                this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+                this.slideWrapperViewBlock.appendChild(this.slideWrapperViewBlock.firstElementChild);
+            }
             this.slideWrapperViewBlock.style.marginLeft = "";
             if(onend) onend();
             this.isAnimViewBlock = false;
@@ -209,8 +304,19 @@ class ViewModule extends Module{
         if(this.isAnimViewBlock) return;
         this.isAnimViewBlock = true;
         this.slideWrapperViewBlock.style.marginLeft = "-100%";
-        this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
-        this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+        if (document.body.clientWidth<450) {
+            this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+        }
+        else if (document.body.clientWidth<1000) {
+            this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+            this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+        }
+        else {
+            this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+            this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+            this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+            this.slideWrapperViewBlock.insertBefore(this.slideWrapperViewBlock.lastElementChild,this.slideWrapperViewBlock.firstElementChild);
+        }
         Animate.animate(-100,0,1000,(value)=> {
             this.slideWrapperViewBlock.style.marginLeft = value+"%";
         },()=>{
@@ -218,6 +324,10 @@ class ViewModule extends Module{
             if(onend) onend();
             this.isAnimViewBlock = false;
         })
+    }
+    viewDel() {
+        this.flag=true;
+        this.updateProductPostList(this.headerMenu);
     }
 }
 
@@ -289,17 +399,17 @@ page.start();
 document.addEventListener("DOMContentLoaded",function () {
     $(document).ready(function () {
         let cont = $('.container').height()+$('.top-menu-wrapper').height();
-        console.log(cont);
         let flag = true;
+
         $(window).scroll(function () {
             if ($(this).scrollTop() >= cont && flag) {
                 $('.top-menu-wrapper').addClass('top-menu-wrapper-fixed');
-                // $('body').css("padding-top", "120px");
+                $('body').css("padding-top", "120px");
                 flag = !flag;
             } else if ($(this).scrollTop() < cont && !flag) {
                 flag = !flag;
                 $('.top-menu-wrapper').removeClass('top-menu-wrapper-fixed');
-                // $('body').css("padding-top", "0px");
+                $('body').css("padding-top", "0px");
             }
         }).trigger("scroll");
 
@@ -307,22 +417,13 @@ document.addEventListener("DOMContentLoaded",function () {
             event.preventDefault();
             let id = $(this).attr('href'),
                 top = $(id).offset().top;
-            $('body,html').animate({scrollTop: top}, 1000);
+            if(top<=cont) {
+                $('html,body').animate({scrollTop: top}, 1000);
+            }
+            else if (top>cont){
+                $('html,body').animate({scrollTop: top-120}, 1000);
+            }
         });
-
-        // cod dlya prokrutki k yakory-------------------------------------------------------------------------
-        // $("a[href*=#]").on("click", function (e) {
-        //     e.preventDefault();
-        //     let anchor = $(this);
-        //     let oft = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
-        //
-        //     $('html, body').stop().animate({
-        //         scrollTop: $(anchor.attr('href')).offset().top + oft
-        //     }, 777);
-        //
-        //     return false;
-        // });
-        // -------------------------------------------------------------------------------------------------------
 
     });
 });

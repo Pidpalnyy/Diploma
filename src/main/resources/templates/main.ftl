@@ -25,40 +25,62 @@
 </div>
 <div class="top-menu-wrapper">
     <div class="top-menu" id="main">
+        <#if auth>
+        <script>
+            window.addEventListener("load", () => {
+                viewModule.viewDel();
+            })
+        </script>
+        <div class="adminBlock">
+            <div><a href="/addCategory">Добавить категории меню</a></div>
+            <div><a href="/addProduct">Добавить продукт</a></div>
+            <div><a href="/addImages">Добавить фото в Галлерею</a></div>
+            <div class="logout">
+                <form method="post" action="/logout">
+                    <button>Logout</button>
+                </form>
+            </div>
+        </div>
+        </#if>
         <a href="#menu">
-            <div class="menu">Меню</div>
+            <div class="menuTop">Меню</div>
         </a>
         <div class="logo_1"></div>
         <a href="#gallery">
             <div class="galleryMenu">Галлерея</div>
         </a>
+
     </div>
 </div>
 <div class="midlle" id="menu">
     <div class="viewMenu">
-        <h2>Меню</h2>
         <div class="mainMenu">
-            <#list categoryMenu as ctgr>
-                <div class="categoryMenu" data-name="${ctgr.getName()}">
-                ${ctgr.getName()}
-                <form action="/api/category/delCategory" method="post">
-            <input type="hidden" name="id" value="${ctgr.getId()}">
-                <input type="submit" class="del" value="X">
-                </form>
-                </div>
-            </#list>
+            <div class="nameCategoryMenu" data-name="mainMenu">Меню</div>
+            <div class="mainMenuCategory">
+                <#list categoryMenu as ctgr>
+                    <div class="categoryBox">
+                    <div class="categoryMenu" data-name="${ctgr.getName()}">${ctgr.getName()}
+                    <#if auth>
+                        <div class="delCat" data-id="${ctgr.getId()}">x</div>
+                    </#if>
+                    </div>
+                    </div>
+                </#list>
+            </div>
         </div>
-        <h2>Детское меню</h2>
         <div class="childrenMenu">
-            <#list categoryChildrensMenu as ctgr>
-                <div class="categoryMenu" data-name="${ctgr.getName()}">
-                ${ctgr.getName()}
-                <form action="/api/category/delCategory" method="post">
-            <input type="hidden" name="id" value="${ctgr.getId()}">
-                <input type="submit" class="del" value="X">
-                </form>
-                </div>
-            </#list>
+            <div class="nameCategoryMenu" data-name="childrenMenu">Детское меню</div>
+            <div class="childrenMenuCategory">
+                <#list categoryChildrensMenu as ctgr>
+                    <div class="categoryBox">
+                    <div class="categoryMenu" data-name="${ctgr.getName()}">${ctgr.getName()}
+                    <#if auth>
+                        <div class="delCat" data-id="${ctgr.getId()}">x</div>
+                    </#if>
+                    </div>
+                    </div>
+                </#list>
+            </div>
         </div>
     </div>
     <div class="viewBlock">
@@ -72,8 +94,6 @@
             </div>
             <div class="sliderViewBlock-wrapper"></div>
         </div>
-
-
     </div>
 </div>
 <div class="gallery" id="gallery">
@@ -85,14 +105,15 @@
                 <div class="slider-arrow slider-arrow-right"></div>
             </div>
         </div>
-
         <div class="slider-wrapper">
             <#list images as image>
                 <div style="background-image: url('/images/${image.getImage()}') ;" class="imageDiv">
-                <form action="/api/image/delImage" method="post">
-            <input type="hidden" name="id" value="${image.getId()}">
-                <input type="submit" class="del" value="X">
-                </form>
+                <#if auth>
+                    <form action="/api/image/delImage" method="post">
+                    <input type="hidden" name="id" value="${image.getId()}">
+                    <input type="submit" class="del" value="X">
+                    </form>
+                </#if>
                 </div>
             </#list>
         </div>

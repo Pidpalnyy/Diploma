@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Getter
@@ -25,12 +24,13 @@ public class Product {
     private String text;
     @Column(columnDefinition = "DOUBLE")
     private Double quantity;
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String selectQuantity;
     @Column(columnDefinition = "DOUBLE")
     private Double price;
-
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String selectPrice;
     @ManyToOne(targetEntity = Category.class,fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
-
-
 }

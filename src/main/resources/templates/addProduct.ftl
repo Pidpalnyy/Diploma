@@ -11,14 +11,13 @@
 <body>
 <div class="container">
     <div class="mainMenu">
-        <div><a href="/addCategory">Категории меню</a></div>
-        <div><a href="/addProduct">Меню</a></div>
-        <div><a href="/addImages">Галерея</a></div>
+        <div><a href="/">Главная</a></div>
+        <div><a href="/addCategory">Добавить категории меню</a></div>
+        <div><a href="/addImages">Добавить фото в Галлерею</a></div>
     </div>
     <#if yes>
         <div class="add">
-
-        <h2>Add Product</h2>
+        <h2>Добавить продукт</h2>
         <form action="/api/product/addProduct" method="post" enctype="multipart/form-data">
 
         <label for="category">Категория:</label>
@@ -38,23 +37,32 @@
         <input type="text" id="text" name="text"/>
 
         <label for="quantity">Колличество:</label>
-        <input type="text" id="quantity" name="quantity"/>
+        <div>
+            <input class="inputQuantity_Price" type="text" id="quantity" name="quantity"/>
+            <select class="selectQuantity_Price" name="selectQuantity">
+                <option>г.</option>
+                <option>мл.</option>
+                <option>шт.</option>
+                <option>ед.</option>
+                <option>кг.</option>
+                <option>мг.</option>
+                <option>л.</option>
+            </select>
+        </div>
 
         <label for="price">Цена:</label>
-        <input type="text" id="price" name="price"/>
-
-        <#--<input type="hidden"-->
-        <#--name="${_csrf.parameterName}"-->
-        <#--value="${_csrf.token}"/>-->
-
+        <div>
+            <input class="inputQuantity_Price" type="text" id="price" name="price"/>
+            <select class="selectQuantity_Price" name="selectPrice">
+                <option>грн</option>
+                <option>$</option>
+                <option>руб</option>
+            </select>
+        </div>
         <input type="submit" class="submit" value="Добавить">
-
         </form>
-
         </div>
     </#if>
 </div>
-
-
 </body>
 </html>
